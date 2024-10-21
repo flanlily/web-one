@@ -26,11 +26,12 @@
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400&display=swap" rel="stylesheet"> <!-- Noto Serif Simplified Chinese -->
 </head>
 <body>
     <h1>リアルタイムフォント変換</h1>
     <h6 id="promptText">フォント変更コマンドを入力してください</h6>
-    <input type="text" class="textbox" id="inputText" placeholder="#f FangSong / #g Gloria / #p Press 2P start">
+    <input type="text" class="textbox" id="inputText" placeholder="#n Noto Serif / #g Gloria / #p Press 2P start">
     
     <div class="output" id="outputText"></div>
 
@@ -46,8 +47,8 @@
             outputText.textContent = text;
 
             // フォントの切り替え
-            if (text.startsWith('#f ')) {
-                outputText.style.fontFamily = 'FangSong, serif';
+            if (text.startsWith('#n ')) {
+                outputText.style.fontFamily = '"Noto Serif SC", serif'; // Noto Serifに変更
                 promptText.textContent = '文章を入力してください'; // 指示文を変更
             } else if (text.startsWith('#g ')) {
                 outputText.style.fontFamily = '"Gloria Hallelujah", cursive';
