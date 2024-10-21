@@ -16,162 +16,44 @@
             width: 100%;
             padding: 10px;
             font-size: 18px;
-            margin-bottom: 10px;
+        }
+        .font-option {
+            margin-top: 10px;
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Press+Start+2P&family=Roboto&family=Open+Sans&family=Lato&family=Montserrat&family=Oswald&family=Raleway&family=Nunito&family=Poppins&family=Amatic+SC&family=Barlow&family=Bebas+Neue&family=Crimson+Pro&family=Dancing+Script&family=Days+One&family=Exo+2&family=Fontdiner+Swanky&family=Indie+Flower&family=Karma&family=Lobster&family=Merriweather&family=Quicksand&family=Sacramento&family=Source+Sans+Pro&family=Ubuntu&family=Varela+Round&family=Zilla+Slab&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Yasuda&display=swap" rel="stylesheet">
 </head>
 <body>
     <h1>リアルタイムフォント変換</h1>
-    <h6 id="promptText">フォント変更コマンドを選択してください</h6>
-
-    <!-- コマンド選択用のドロップダウン -->
-    <select id="fontSelector" class="textbox">
-        <option value="">フォントを選択してください</option>
-        <option value="#f">FangSong</option>
-        <option value="#g">Gloria Hallelujah</option>
-        <option value="#p">Press Start 2P</option>
-        <option value="#r">Roboto</option>
-        <option value="#o">Open Sans</option>
-        <option value="#l">Lato</option>
-        <option value="#m">Montserrat</option>
-        <option value="#s">Oswald</option>
-        <option value="#w">Raleway</option>
-        <option value="#n">Nunito</option>
-        <option value="#pp">Poppins</option>
-        <option value="#a">Amatic SC</option>
-        <option value="#b">Barlow</option>
-        <option value="#bn">Bebas Neue</option>
-        <option value="#c">Crimson Pro</option>
-        <option value="#d">Dancing Script</option>
-        <option value="#do">Days One</option>
-        <option value="#e">Exo 2</option>
-        <option value="#fs">Fontdiner Swanky</option>
-        <option value="#if">Indie Flower</option>
-        <option value="#k">Karma</option>
-        <option value="#lo">Lobster</option>
-        <option value="#me">Merriweather</option>
-        <option value="#q">Quicksand</option>
-        <option value="#sa">Sacramento</option>
-        <option value="#sp">Source Sans Pro</option>
-        <option value="#u">Ubuntu</option>
-        <option value="#vr">Varela Round</option>
-        <option value="#zl">Zilla Slab</option>
-    </select>
-
-    <!-- テキスト入力用ボックス -->
-    <input type="text" class="textbox" id="inputText" placeholder="ここに文章を入力してください">
+    <h6>フォント変更コマンドを入力してください</h6>
+    <input type="text" class="textbox" id="inputText" placeholder="#f FangSong / #g Gloria / #p Press 2P start / #a 青柳衛山">
     
     <div class="output" id="outputText"></div>
 
     <script>
-        const fontSelector = document.getElementById('fontSelector');
         const inputText = document.getElementById('inputText');
         const outputText = document.getElementById('outputText');
 
-        fontSelector.addEventListener('change', function() {
-            const selectedFont = fontSelector.value;
-
-            // フォントの切り替え
-            switch (selectedFont) {
-                case '#f':
-                    outputText.style.fontFamily = 'FangSong, serif';
-                    break;
-                case '#g':
-                    outputText.style.fontFamily = '"Gloria Hallelujah", cursive';
-                    break;
-                case '#p':
-                    outputText.style.fontFamily = '"Press Start 2P", cursive';
-                    break;
-                case '#r':
-                    outputText.style.fontFamily = '"Roboto", sans-serif';
-                    break;
-                case '#o':
-                    outputText.style.fontFamily = '"Open Sans", sans-serif';
-                    break;
-                case '#l':
-                    outputText.style.fontFamily = '"Lato", sans-serif';
-                    break;
-                case '#m':
-                    outputText.style.fontFamily = '"Montserrat", sans-serif';
-                    break;
-                case '#s':
-                    outputText.style.fontFamily = '"Oswald", sans-serif';
-                    break;
-                case '#w':
-                    outputText.style.fontFamily = '"Raleway", sans-serif';
-                    break;
-                case '#n':
-                    outputText.style.fontFamily = '"Nunito", sans-serif';
-                    break;
-                case '#pp':
-                    outputText.style.fontFamily = '"Poppins", sans-serif';
-                    break;
-                case '#a':
-                    outputText.style.fontFamily = '"Amatic SC", cursive';
-                    break;
-                case '#b':
-                    outputText.style.fontFamily = '"Barlow", sans-serif';
-                    break;
-                case '#bn':
-                    outputText.style.fontFamily = '"Bebas Neue", sans-serif';
-                    break;
-                case '#c':
-                    outputText.style.fontFamily = '"Crimson Pro", serif';
-                    break;
-                case '#d':
-                    outputText.style.fontFamily = '"Dancing Script", cursive';
-                    break;
-                case '#do':
-                    outputText.style.fontFamily = '"Days One", sans-serif';
-                    break;
-                case '#e':
-                    outputText.style.fontFamily = '"Exo 2", sans-serif';
-                    break;
-                case '#fs':
-                    outputText.style.fontFamily = '"Fontdiner Swanky", cursive';
-                    break;
-                case '#if':
-                    outputText.style.fontFamily = '"Indie Flower", cursive';
-                    break;
-                case '#k':
-                    outputText.style.fontFamily = '"Karma", sans-serif';
-                    break;
-                case '#lo':
-                    outputText.style.fontFamily = '"Lobster", cursive';
-                    break;
-                case '#me':
-                    outputText.style.fontFamily = '"Merriweather", serif';
-                    break;
-                case '#q':
-                    outputText.style.fontFamily = '"Quicksand", sans-serif';
-                    break;
-                case '#sa':
-                    outputText.style.fontFamily = '"Sacramento", cursive';
-                    break;
-                case '#sp':
-                    outputText.style.fontFamily = '"Source Sans Pro", sans-serif';
-                    break;
-                case '#u':
-                    outputText.style.fontFamily = '"Ubuntu", sans-serif';
-                    break;
-                case '#vr':
-                    outputText.style.fontFamily = '"Varela Round", sans-serif';
-                    break;
-                case '#zl':
-                    outputText.style.fontFamily = '"Zilla Slab", serif';
-                    break;
-                default:
-                    outputText.style.fontFamily = 'Arial, sans-serif'; // デフォルトフォント
-                    break;
-            }
+        inputText.addEventListener('input', function() {
+            const text = inputText.value;
 
             // 結果のテキストを設定
-            outputText.textContent = inputText.value;
-        });
+            outputText.textContent = text;
 
-        inputText.addEventListener('input', function() {
-            outputText.textContent = inputText.value;
+            // フォントの切り替え
+            if (text.startsWith('#f ')) {
+                outputText.style.fontFamily = 'FangSong, serif';
+            } else if (text.startsWith('#g ')) {
+                outputText.style.fontFamily = '"Gloria Hallelujah", cursive';
+            } else if (text.startsWith('#p ')) {
+                outputText.style.fontFamily = '"Press Start 2P", cursive';
+            } else if (text.startsWith('#a ')) {
+                outputText.style.fontFamily = '"Yasuda", sans-serif'; // 青柳衛山フォントを使用
+            } else {
+                outputText.style.fontFamily = 'Arial, sans-serif'; // デフォルトフォント
+            }
         });
     </script>
 </body>
