@@ -27,7 +27,7 @@
 </head>
 <body>
     <h1>リアルタイムフォント変換</h1>
-    <h6>フォント変更コマンドを入力してください</h6>
+    <h6 id="promptText">フォント変更コマンドを入力してください</h6>
     <input type="text" class="textbox" id="inputText" placeholder="#f FangSong / #g Gloria / #p Press 2P start / #a 青柳衛山">
     
     <div class="output" id="outputText"></div>
@@ -35,6 +35,7 @@
     <script>
         const inputText = document.getElementById('inputText');
         const outputText = document.getElementById('outputText');
+        const promptText = document.getElementById('promptText');
 
         inputText.addEventListener('input', function() {
             const text = inputText.value;
@@ -45,14 +46,19 @@
             // フォントの切り替え
             if (text.startsWith('#f ')) {
                 outputText.style.fontFamily = 'FangSong, serif';
+                promptText.textContent = '文章を入力してください'; // 指示文を変更
             } else if (text.startsWith('#g ')) {
                 outputText.style.fontFamily = '"Gloria Hallelujah", cursive';
+                promptText.textContent = '文章を入力してください'; // 指示文を変更
             } else if (text.startsWith('#p ')) {
                 outputText.style.fontFamily = '"Press Start 2P", cursive';
+                promptText.textContent = '文章を入力してください'; // 指示文を変更
             } else if (text.startsWith('#a ')) {
                 outputText.style.fontFamily = '"Yasuda", sans-serif'; // 青柳衛山フォントを使用
+                promptText.textContent = '文章を入力してください'; // 指示文を変更
             } else {
                 outputText.style.fontFamily = 'Arial, sans-serif'; // デフォルトフォント
+                promptText.textContent = 'フォント変更コマンドを入力してください'; // 元に戻す
             }
         });
     </script>
