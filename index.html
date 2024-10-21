@@ -7,33 +7,52 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        h1, h3, h4 {
+            text-align: center;
         }
         .output {
             margin-top: 20px;
             font-family: FangSong, serif;
             font-size: 24px;
+            text-align: center;
         }
         .textbox {
             width: 100%;
             padding: 10px;
             font-size: 18px;
+            box-sizing: border-box; /* Paddingを含めた幅の計算を可能にする */
         }
         .results {
             margin-top: 20px;
             border: 1px solid #ccc;
             padding: 10px;
-            background: #f9f9f9;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         .result-item {
             margin: 10px 0;
+        }
+        @media (max-width: 600px) {
+            .output {
+                font-size: 20px;
+            }
+            .textbox {
+                font-size: 16px;
+            }
+            .results {
+                padding: 5px;
+            }
         }
     </style>
 </head>
 <body>
     <h1>リアルタイムでFangSongフォントに変換</h1>
-    <h3>※下記コマンドで指定する場合半角スペースを先頭と中身に置くこと (例: #y ○○○)
-    <h4>#w : wikipedia / #y : YouTube</h6>
-    <h4>#n : ニコニコ / #g : Google / #y : Yahoo</h6>
+    <h3>※下記コマンドで指定する場合半角スペースを先頭と中身に置くこと (例: #y ○○○)</h3>
+    <h4>#w : wikipedia / #y : YouTube / #n : ニコニコ / #g : Google / #yahoo : Yahoo</h4>
     <input type="text" class="textbox" id="inputText" placeholder="ここに文字を入力してください">
     
     <div class="output" id="outputText"></div>
