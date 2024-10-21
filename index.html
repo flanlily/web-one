@@ -7,18 +7,28 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px; /* スペースを確保 */
+            box-sizing: border-box; /* パディングを含める */
         }
         .output {
             margin-top: 20px;
             font-size: 24px;
+            word-wrap: break-word; /* テキストが長すぎる場合に改行する */
         }
         .textbox {
-            width: 100%;
+            width: 100%; /* 幅を100%に設定 */
+            max-width: 600px; /* 最大幅を設定 */
             padding: 10px;
             font-size: 18px;
+            border: 1px solid #ccc; /* 境界線を追加 */
+            border-radius: 5px; /* 角を丸める */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* 影を追加 */
         }
-        .font-option {
-            margin-top: 10px;
+        @media (max-width: 768px) {
+            .output {
+                font-size: 20px; /* 小さな画面ではフォントサイズを少し小さく */
+            }
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
