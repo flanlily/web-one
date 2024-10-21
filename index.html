@@ -7,33 +7,30 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px; /* スペースを確保 */
-            box-sizing: border-box; /* パディングを含める */
+            text-align: center; /* 中央揃え */
         }
         .output {
             margin-top: 20px;
-            font-size: 2vw; /* ビューポート幅に基づくフォントサイズ */
-            word-wrap: break-word; /* テキストが長すぎる場合に改行する */
+            font-size: 24px;
+            word-wrap: break-word; /* テキストの折り返し */
         }
         .textbox {
-            width: 100%; /* 幅を100%に設定 */
-            max-width: 600px; /* 最大幅を設定 */
+            width: 90%; /* テキストボックスの幅を90%に */
+            max-width: 600px; /* 最大幅を600pxに設定 */
             padding: 10px;
-            font-size: 2vw; /* ビューポート幅に基づくフォントサイズ */
-            border: 1px solid #ccc; /* 境界線を追加 */
-            border-radius: 5px; /* 角を丸める */
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* 影を追加 */
+            font-size: 18px;
+        }
+        .font-option {
+            margin-top: 10px;
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Yasuda&display=swap" rel="stylesheet">
 </head>
 <body>
     <h1>リアルタイムフォント変換</h1>
     <h6 id="promptText">フォント変更コマンドを入力してください</h6>
-    <input type="text" class="textbox" id="inputText" placeholder="#f FangSong / #g Gloria / #p Press 2P start / #a 青柳衛山">
+    <input type="text" class="textbox" id="inputText" placeholder="#f FangSong / #g Gloria / #p Press 2P start">
     
     <div class="output" id="outputText"></div>
 
@@ -41,13 +38,6 @@
         const inputText = document.getElementById('inputText');
         const outputText = document.getElementById('outputText');
         const promptText = document.getElementById('promptText');
-
-        // ウィンドウサイズに基づいてフォントサイズを調整する関数
-        function adjustFontSize() {
-            const vw = window.innerWidth; // ビューポート幅を取得
-            const newSize = Math.max(16, vw / 40); // 最小サイズを16pxに設定し、幅に基づいて計算
-            document.documentElement.style.setProperty('--dynamic-font-size', `${newSize}px`);
-        }
 
         inputText.addEventListener('input', function() {
             const text = inputText.value;
@@ -65,22 +55,11 @@
             } else if (text.startsWith('#p ')) {
                 outputText.style.fontFamily = '"Press Start 2P", cursive';
                 promptText.textContent = '文章を入力してください'; // 指示文を変更
-            } else if (text.startsWith('#a ')) {
-                outputText.style.fontFamily = '"Yasuda", sans-serif'; // 青柳衛山フォントを使用
-                promptText.textContent = '文章を入力してください'; // 指示文を変更
             } else {
                 outputText.style.fontFamily = 'Arial, sans-serif'; // デフォルトフォント
                 promptText.textContent = 'フォント変更コマンドを入力してください'; // 元に戻す
             }
-
-            adjustFontSize(); // フォントサイズを調整
         });
-
-        // ウィンドウサイズ変更時にもフォントサイズを調整
-        window.addEventListener('resize', adjustFontSize);
-
-        // 初回のフォントサイズ調整
-        adjustFontSize();
     </script>
 </body>
 </html>
