@@ -20,77 +20,130 @@
         }
         .results {
             margin-top: 20px;
-            padding: 10px;
             border: 1px solid #ccc;
+            padding: 10px;
+            background: #f9f9f9;
+        }
+        .result-item {
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
-    <h1>リアルタイムでFangSongフォントに変換</h1>
-    
-    <!-- テキスト入力ボックス -->
+    <h1>リアルタイムでFangSongフォントに変換※指定する場合半角スペースを置くこと</h1>
+    <h6>#w : wikipedia / #y : YouTube</h6>
+    <h6>#n : ニコニコ / #g : Google / #y : Yahoo</h6>
     <input type="text" class="textbox" id="inputText" placeholder="ここに文字を入力してください">
     
-    <!-- フォントが適用されるリアルタイム結果表示エリア -->
     <div class="output" id="outputText"></div>
-    
-    <!-- WikipediaやXの検索結果を表示するエリア -->
-    <div class="results" id="searchResults"></div>
+    <div class="results" id="results"></div>
 
     <script>
         const inputText = document.getElementById('inputText');
         const outputText = document.getElementById('outputText');
-        const searchResults = document.getElementById('searchResults');
+        const resultsContainer = document.getElementById('results');
 
-        // 入力時にリアルタイムで表示を更新し、APIを呼び出す
-        inputText.addEventListener('input', function() {
-            const input = inputText.value;
-            outputText.textContent = input; // FangSongの文字を表示
+        inputText.addEventListener('input', async function() {
+            const text = inputText.value;
+            outputText.textContent = text;
 
-            // Wikipedia検索
-            if (input.startsWith('#w ')) {
-                const query = input.substring(3);
-                searchWikipedia(query);
-            }
-            
-            // X（旧Twitter）検索
-            if (input.startsWith('#x ')) {
-                const query = input.substring(3);
-                searchX(query); // Xの検索処理（APIキーが必要）
+            // 結果をクリア
+            resultsContainer.innerHTML = '';
+
+            // キーワードによる処理
+            if (text.startsWith('#w ')) {
+                const query = text.slice(3);
+                const wikipediaData = await searchWikipedia(query);
+                displayResults(wikipediaData);
+            } else if (text.startsWith('#y ')) {
+                const query = text.slice(3);
+                const youtubeData = await searchYouTube(query);
+                displayResults(youtubeData);
+            } else if (text.startsWith('#n ')) {
+                const query = text.slice(3);
+                const nicovideoData = await searchNicoNico(query);
+                displayResults(nicovideoData);
+            } else if (text.startsWith('#g ')) {
+                const query = text.slice(3);
+                const googleData = await searchGoogle(query);
+                displayResults(googleData);
+            } else if (text.startsWith('#yahoo ')) {
+                const query = text.slice(7);
+                const yahooData = await searchYahoo(query);
+                displayResults(yahooData);
             }
         });
 
-        // Wikipedia APIを使用して記事を検索
-        function searchWikipedia(query) {
-            const apiUrl = `https://ja.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&origin=*`;
-
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.query.search.length > 0) {
-                        const articleTitle = data.query.search[0].title;
-                        const articleSnippet = data.query.search[0].snippet;
-                        searchResults.innerHTML = `
-                            <h3>Wikipedia結果</h3>
-                            <p><strong>${articleTitle}</strong></p>
-                            <p>${articleSnippet}...</p>
-                            <a href="https://ja.wikipedia.org/wiki/${encodeURIComponent(articleTitle)}" target="_blank">続きを読む</a>
-                        `;
-                    } else {
-                        searchResults.innerHTML = '<p>検索結果が見つかりませんでした。</p>';
-                    }
-                })
-                .catch(error => {
-                    console.error('Wikipedia検索中にエラーが発生しました:', error);
-                    searchResults.innerHTML = '<p>Wikipedia検索中にエラーが発生しました。</p>';
-                });
+        // Wikipedia検索
+        async function searchWikipedia(query) {
+            const response = await fetch(`https://ja.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=${encodeURIComponent(query)}&origin=*`);
+            const data = await response.json();
+            return data.query.search.map(item => ({
+                title: item.title,
+                snippet: item.snippet
+            }));
         }
 
-        // Xの検索処理（ここにAPIキーが必要）
-        function searchX(query) {
-            // X APIのリクエストを送るコードをここに書きます。
-            // XのAPIキーが必要です。
-            searchResults.innerHTML = `<p>X検索の機能は準備中です。</p>`;
+        // YouTube検索
+        async function searchYouTube(query) {
+            const apiKey = 'YOUR_YOUTUBE_API_KEY'; // YouTube Data APIのAPIキーをここに入れてください
+            const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&key=${apiKey}`);
+            const data = await response.json();
+            return data.items.map(item => ({
+                title: item.snippet.title,
+                url: `https://www.youtube.com/watch?v=${item.id.videoId}`
+            }));
+        }
+
+        // ニコニコ動画検索
+        async function searchNicoNico(query) {
+            const response = await fetch(`https://api.search.nicovideo.jp/api/v1/search?keyword=${encodeURIComponent(query)}`);
+            const data = await response.json();
+            return data.data.map(item => ({
+                title: item.title,
+                url: item.url
+            }));
+        }
+
+        // Google検索
+        async function searchGoogle(query) {
+            const response = await fetch(`https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(query)}&key=YOUR_GOOGLE_API_KEY&cx=YOUR_CX_CODE`); // Google Custom Search APIのAPIキーとCXを入れてください
+            const data = await response.json();
+            return data.items.map(item => ({
+                title: item.title,
+                link: item.link
+            }));
+        }
+
+        // Yahoo検索
+        async function searchYahoo(query) {
+            const response = await fetch(`https://search.yahooapis.com/search/web/v1/search?query=${encodeURIComponent(query)}&format=json&appid=YOUR_YAHOO_APP_ID`); // Yahoo Search APIのApp IDを入れてください
+            const data = await response.json();
+            return data.query.results.map(item => ({
+                title: item.title,
+                link: item.link
+            }));
+        }
+
+        // 検索結果の表示
+        function displayResults(data) {
+            if (!data || data.length === 0) {
+                resultsContainer.innerHTML = '<p>結果が見つかりませんでした。</p>';
+                return;
+            }
+
+            data.forEach(item => {
+                const resultItem = document.createElement('div');
+                resultItem.className = 'result-item';
+                if (item.url) {
+                    resultItem.innerHTML = `<a href="${item.url}" target="_blank">${item.title}</a>`;
+                } else if (item.link) {
+                    resultItem.innerHTML = `<a href="${item.link}" target="_blank">${item.title}</a>`;
+                } else {
+                    resultItem.innerHTML = `<h4>${item.title}</h4><p>${item.snippet || ''}</p>`;
+                }
+                resultsContainer.appendChild(resultItem);
+            });
         }
     </script>
 </body>
