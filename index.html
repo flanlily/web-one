@@ -13,22 +13,17 @@
         }
         .output {
             margin-top: 20px;
-            font-size: 24px;
+            font-size: 2vw; /* ビューポート幅に基づくフォントサイズ */
             word-wrap: break-word; /* テキストが長すぎる場合に改行する */
         }
         .textbox {
             width: 100%; /* 幅を100%に設定 */
             max-width: 600px; /* 最大幅を設定 */
             padding: 10px;
-            font-size: 18px;
+            font-size: 2vw; /* ビューポート幅に基づくフォントサイズ */
             border: 1px solid #ccc; /* 境界線を追加 */
             border-radius: 5px; /* 角を丸める */
             box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* 影を追加 */
-        }
-        @media (max-width: 768px) {
-            .output {
-                font-size: 20px; /* 小さな画面ではフォントサイズを少し小さく */
-            }
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
@@ -46,6 +41,13 @@
         const inputText = document.getElementById('inputText');
         const outputText = document.getElementById('outputText');
         const promptText = document.getElementById('promptText');
+
+        // ウィンドウサイズに基づいてフォントサイズを調整する関数
+        function adjustFontSize() {
+            const vw = window.innerWidth; // ビューポート幅を取得
+            const newSize = Math.max(16, vw / 40); // 最小サイズを16pxに設定し、幅に基づいて計算
+            document.documentElement.style.setProperty('--dynamic-font-size', `${newSize}px`);
+        }
 
         inputText.addEventListener('input', function() {
             const text = inputText.value;
@@ -70,7 +72,15 @@
                 outputText.style.fontFamily = 'Arial, sans-serif'; // デフォルトフォント
                 promptText.textContent = 'フォント変更コマンドを入力してください'; // 元に戻す
             }
+
+            adjustFontSize(); // フォントサイズを調整
         });
+
+        // ウィンドウサイズ変更時にもフォントサイズを調整
+        window.addEventListener('resize', adjustFontSize);
+
+        // 初回のフォントサイズ調整
+        adjustFontSize();
     </script>
 </body>
 </html>
